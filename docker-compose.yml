@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+    api:
+        build: .
+        ports: 
+            - 8099:80
+        volumes:
+            - ./src:/code
+
+        command: bash -c "./manage.py migrate && ./manage.py runserver 0.0.0.0:80"
