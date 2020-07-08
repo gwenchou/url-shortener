@@ -26,7 +26,15 @@
             origin_url: document.getElementById("origin_url").value
           },
         }).then(response => {
-          window.location.href = '/' + response.data.alias + '/detail/';
+          if (response.data.alias) {
+            window.location.href = '/' + response.data.alias + '/detail/';
+          } else {
+            if (response.data.origin_url && Array.isArray(response.data.origin_url )) {
+              for (let i=0;i<response.data.origin_url.length;i++) {
+                alert(response.data.origin_url[i]);
+              }
+            }
+          }
         }).catch(error => {
           alert(error);
         });

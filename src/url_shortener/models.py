@@ -1,6 +1,7 @@
 import random
 import string
 from django.db import models
+from django.forms import ModelForm
 
 
 class ShortenedUrlAliasField(models.SlugField):
@@ -21,3 +22,9 @@ class ShortenedUrlAliasField(models.SlugField):
 class Shortened_Url(models.Model):
     alias = ShortenedUrlAliasField(max_length=8, unique=True)
     origin_url = models.URLField(max_length=2048)
+
+
+class ShortenedUrlForm(ModelForm):
+    class Meta:
+        model = Shortened_Url
+        fields = ['origin_url']
