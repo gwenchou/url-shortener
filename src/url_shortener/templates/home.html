@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>URL Shortener</title>
+  <meta name="description" content="Awesome URL Shortener">
+</head>
+
+<body>
+  <h1>URL Shortener</h1>
+  <form action="{% url 'url_shortener:create' %}" method="post">
+      <input type="text" name="origin_url" id="origin_url" />
+      <label for="origin_url">URL to short</label><br>
+    <input type="button" onclick="generateUrl()" value="Generate short URL!">
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      function generateUrl() {
+        axios({
+          method: 'post',
+          url: '/shortened_urls/',
+          headers: {
+            'X-CSRFToken': "{{ csrf_token }}"
+          },
+          data: {
+            origin_url: document.getElementById("origin_url").value
+          },
+        }).then(response => {
+          
+        }).catch(error => {
+          alert(error);
+        });
+      }
+    </script>
+</body>
+</html>

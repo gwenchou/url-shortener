@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from django.test import TestCase, Client
 from url_shortener.models import Shortened_Url
@@ -10,7 +11,11 @@ class UrlShortenerTestCase(TestCase):
     def test_create_shortened_url(self):
         origin_url = 'https://google.com'
         http_client = Client()
-        response = http_client.post('/shortened_urls/', {'origin_url': origin_url})
+        response = http_client.post(
+            '/shortened_urls/',
+            json.dumps({'origin_url': origin_url}),
+            content_type="application/json"
+        )
         response_content = response.json()
 
         self.assertEqual(response.status_code, HTTPStatus.CREATED)
