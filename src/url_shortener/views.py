@@ -8,7 +8,7 @@ from url_shortener.models import Shortened_Url
 
 def home(request):
     return render(request, 'home.html')
-    
+
 
 def shortened_url_detail(request, alias):
     shortened_url = Shortened_Url.objects.get(alias=alias)
@@ -26,7 +26,7 @@ def redirect_from_alias(request, alias):
     return HttpResponseRedirect(shortened_url.origin_url)
 
 
-class UrlShortener(View):
+class UrlShortenerApi(View):
     def post(self, request):
         shortened_url = Shortened_Url.objects.create(
             origin_url=json.loads(request.body).get('origin_url')
