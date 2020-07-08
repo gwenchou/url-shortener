@@ -1,7 +1,13 @@
 from http import HTTPStatus
 from django.views import View
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from url_shortener.models import Shortened_Url
+
+
+def redirect_from_alias(self, alias):
+    shortened_url = Shortened_Url.objects.get(alias=alias)
+
+    return HttpResponseRedirect(shortened_url.origin_url)
 
 
 class UrlShortener(View):
@@ -15,8 +21,8 @@ class UrlShortener(View):
             'origin_url': shortened_url.origin_url
         }, status=HTTPStatus.CREATED)
 
-    def get(self, request, slug):
-        shortened_url = Shortened_Url.objects.get(alias=slug)
+    def get(self, request, alias):
+        shortened_url = Shortened_Url.objects.get(alias=alias)
         
         return JsonResponse({
             'alias': shortened_url.alias,

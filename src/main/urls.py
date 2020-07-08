@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 from url_shortener import urls
+from url_shortener.views import redirect_from_alias
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shortened_urls/', include('url_shortener.urls')),
+    path('<slug:alias>/', redirect_from_alias),
 ]
