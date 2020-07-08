@@ -10,7 +10,17 @@ def home(request):
     return render(request, 'home.html')
     
 
-def redirect_from_alias(self, alias):
+def shortened_url_detail(request, alias):
+    shortened_url = Shortened_Url.objects.get(alias=alias)
+
+    return render(
+        request,
+        'shortened_url_detail.html',
+        {'alias': alias, 'origin_url': shortened_url.origin_url}
+    )
+
+
+def redirect_from_alias(request, alias):
     shortened_url = Shortened_Url.objects.get(alias=alias)
 
     return HttpResponseRedirect(shortened_url.origin_url)

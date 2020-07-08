@@ -10,8 +10,7 @@
 <body>
   <h1>URL Shortener</h1>
   <form action="{% url 'url_shortener:create' %}" method="post">
-      <input type="text" name="origin_url" id="origin_url" />
-      <label for="origin_url">URL to short</label><br>
+      <input type="text" name="origin_url" id="origin_url" placeholder="URL to short" />
     <input type="button" onclick="generateUrl()" value="Generate short URL!">
     </form>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -27,7 +26,7 @@
             origin_url: document.getElementById("origin_url").value
           },
         }).then(response => {
-          
+          window.location.href = '/' + response.data.alias + '/detail/';
         }).catch(error => {
           alert(error);
         });
